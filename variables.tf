@@ -1,3 +1,9 @@
+variable "region" {
+  type    = string
+  default = "af-south-1a"
+}
+
+
 variable "instance_name" {
   description = "Value of the Name tag for the EC2 instance"
   type        = string

@@ -8,12 +8,6 @@ terraform {
   required_version = ">= 0.14.9"
 }
 
-provider "aws" {
-  profile = "default"
-  region  = "af-south-1"
-}
-
-
 resource "aws_vpc" "my_vpc" {
   cidr_block = var.vpc
 }
