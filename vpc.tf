@@ -40,7 +40,7 @@ resource "aws_route_table_association" "public_rt_a" {
 }
 
 resource "aws_eip" "lb" {
-  instance   = aws_instance.web_app_2.id
+  instance   = data.aws_ami.ubuntu.id
   vpc        = true
   depends_on = [aws_internet_gateway.gw]
 }
