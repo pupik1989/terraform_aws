@@ -7,6 +7,7 @@ resource "aws_key_pair" "key" {
 resource "aws_instance" "web_app-2" {
   ami           = var.instance_name
   instance_type = "t3.micro"
+  availability_zone = var.availability_zone
   tags = {
     Name = "auto_scale_instance"
   }

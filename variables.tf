@@ -16,10 +16,10 @@ variable "instance_name" {
 }
 
 
-# variable "availability_zone" {
-#   type    = string
-#   default = "af-south-1a"
-# }
+variable "availability_zone" {
+  type    = string
+  default = "af-south-1a"
+}
 
 
 # variable "vpc" {
