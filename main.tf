@@ -98,13 +98,7 @@ resource "aws_instance" "server_app2" {
     network_interface_id = aws_network_interface.foo.id
     device_index         = 0
   }
-  user_data = <<-EOF
-              #! /bin/bash
-              sudo apt-get update
-              sudo apt-get install -y nginx
-              sudo systemctl start nginx
-              echo "<h1>Hello world</h1>" | sudo tee /var/www/html/index.nginx-debian.html
-              EOF
+  user_data = file("install_web_server.sh")
 }
 
 
