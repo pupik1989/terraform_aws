@@ -44,3 +44,9 @@ resource "aws_eip" "lb" {
   vpc        = true
   depends_on = [aws_internet_gateway.gw]
 }
+
+resource "aws_network_interface" "foo" {
+  subnet_id       = aws_subnet.my_subnet.id
+  private_ips     = var.private_ips
+  security_groups = [aws_security_group.allow_web.id]
+}
