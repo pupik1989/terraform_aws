@@ -1,5 +1,5 @@
 resource "aws_vpc" "my_vpc" {
-  cidr_block = var.vpc
+  cidr_block = "10.0.0.0/16"
   tags = {
     Name = "my_vpc"
   }
@@ -21,7 +21,6 @@ resource "aws_internet_gateway" "gw" {
     Name = "my_internet_gateway"
   }
 }
-
 
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.my_vpc.id

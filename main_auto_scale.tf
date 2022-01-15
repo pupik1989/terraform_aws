@@ -13,8 +13,6 @@ resource "aws_instance" "web_app_2" {
   }
   user_data = file("install_web_server.sh")
 }
-
-
 output "public_ip" {
   value = aws_instance.web_app_2.public_ip
 }
