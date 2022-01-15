@@ -1,6 +1,6 @@
 variable "region" {
   type    = string
-  default = "af-south-1a"
+  default = "af-south-1"
 }
 
 variable "key_name" {

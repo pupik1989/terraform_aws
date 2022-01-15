@@ -60,14 +60,6 @@ resource "aws_security_group" "allow_web" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    description = "SSH traffic"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   egress {
     from_port        = 0
     to_port          = 0
@@ -84,19 +76,22 @@ resource "aws_network_interface" "foo" {
 }
 
 resource "aws_eip" "lb" {
-  instance   = aws_instance.server_app2.id
+  instance   = aws_instance.server_app_1.id
   vpc        = true
   depends_on = [aws_internet_gateway.gw]
 }
 
-resource "aws_instance" "server_app2" {
+resource "aws_instance" "server_app_1" {
   ami           = var.instance_name
   instance_type = "t3.micro"
-  key_name      = "aws_key"
+  key_name      = var.key_name
 
   network_interface {
     network_interface_id = aws_network_interface.foo.id
     device_index         = 0
+  }
+  tags = {
+    Name = "web_server_1"
   }
   user_data = file("install_web_server.sh")
 }
