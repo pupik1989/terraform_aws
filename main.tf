@@ -11,7 +11,7 @@ resource "aws_launch_configuration" "web" {
   key_name                    = var.key_name
   security_groups             = [aws_security_group.allow_web.id]
   associate_public_ip_address = true
-  # user_data                   = file("install_web_server")
+  # user_data                   = file("install_web_server.sh")
 }
 
 resource "aws_autoscaling_group" "auto_group" {
@@ -21,9 +21,9 @@ resource "aws_autoscaling_group" "auto_group" {
   desired_capacity          = 2
   health_check_grace_period = 300
   health_check_type         = "ELB"
-  force_delete         = true
-  launch_configuration = aws_launch_configuration.web.name
-  vpc_zone_identifier  = [aws_subnet.my_subnet.id]
+  force_delete              = true
+  launch_configuration      = aws_launch_configuration.web.name
+  vpc_zone_identifier       = [aws_subnet.my_subnet.id]
   timeouts {
     delete = "15m"
   }
