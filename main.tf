@@ -11,7 +11,7 @@ resource "aws_launch_configuration" "web" {
   key_name                    = var.key_name
   security_groups             = [aws_security_group.allow_web.id]
   associate_public_ip_address = true
-  # user_data                   = file("install_web_server.sh")
+  user_data                   = file("install_web_server.sh")
 }
 
 resource "aws_autoscaling_group" "auto_group" {
