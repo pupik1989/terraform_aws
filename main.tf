@@ -4,38 +4,26 @@ resource "aws_key_pair" "key" {
   public_key = file(var.public_key)
 }
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*"]
-  }
-
-  owners = ["099720109477"] # Canonical
+resource "aws_launch_configuration" "web" {
+  name_prefix                 = "web-"
+  image_id                    = "ami-030b8d2037063bab3"
+  instance_type               = "t3.micro"
+  key_name                    = var.key_name
+  security_groups             = [aws_security_group.allow_web.id]
+  associate_public_ip_address = true
+  # user_data                   = file("install_web_server")
 }
-
-resource "aws_launch_configuration" "launch_conf" {
-  name          = "web_config"
-  image_id      = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  key_name      = var.key_name
-}
-
-
-
-
 
 resource "aws_autoscaling_group" "auto_group" {
-  name                      = "my_autoscaling_group"
+  name                      = "my_autoscaling_group-asg"
   max_size                  = 3
   min_size                  = 1
+  desired_capacity          = 2
   health_check_grace_period = 300
   health_check_type         = "ELB"
-  desired_capacity          = 1
-  force_delete              = true
-  launch_configuration      = aws_launch_configuration.launch_conf.name
-  vpc_zone_identifier       = [aws_subnet.my_subnet.id]
+  force_delete         = true
+  launch_configuration = aws_launch_configuration.web.name
+  vpc_zone_identifier  = [aws_subnet.my_subnet.id]
   timeouts {
     delete = "15m"
   }
